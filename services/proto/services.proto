@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package proto;
+
+
+
+message Empty{}
+
+message Agent{
+	string ID = 1;
+	string Username = 2;
+	string Email = 3;
+}
+
+message Departemant{
+	string ID = 1;
+	string Username = 2;
+	repeated Agent Agents = 3;
+}
+
+message Agents {
+	repeated Agent Agents = 1;
+}
+
+message Departemants{
+	repeated Departemant Departemants = 1;
+}
+
+message Nofitication{
+	string Info = 1;
+}
+
+message DepartemantRequest{
+	string Username = 1;
+}
+
+message DepartemantUpdateRequest {
+	string Username = 1;
+	Departemant DepartemantInfo = 2;
+}
+
+message AgentUpdateRequest{
+	string Identifiers = 1;
+	Agent AgentInfo = 2;
+}
+
+message AgentRequest{
+	string Identifiers = 1;
+}
+
+
+service DepartemantService{
+	rpc GetDepartements(Empty) returns (Departemants);
+	rpc GetDepartementByName(DepartemantRequest) returns (Departemant);
+	rpc AddDepartement(Departemant) returns (Nofitication);
+	rpc UpdateDepartement(DepartemantUpdateRequest) returns (Departemant);
+	rpc DeleteDepartement(DepartemantRequest) returns (Nofitication);
+	rpc GetAgents(Empty) returns (Agents);
+	rpc GetAgentByIdentifiers(AgentRequest) returns (Agent);
+	rpc AddAgent(Agent) returns (Nofitication);
+	rpc UpdateAgent(AgentUpdateRequest) returns (Agent);
+	rpc DeleteAgent(AgentRequest) returns (Nofitication);
+}
