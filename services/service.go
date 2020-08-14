@@ -15,7 +15,7 @@ import(
 )
 type departemantService struct{}
 
-func (departemantService) GetDepartements(_ context.Context,  in *proto.Empty) (*proto.Departemants, error) {
+func (d *departemantService) GetDepartements(_ context.Context,  in *proto.Empty) (*proto.Departemants, error) {
 	cur, err := database.Collection.Find(context.TODO(), bson.D{{}})
 
 	if err != nil {
@@ -41,7 +41,7 @@ func (departemantService) GetDepartements(_ context.Context,  in *proto.Empty) (
 func main(){
 
 	server := grpc.NewServer()
-	proto.RegisterDepartemantServiceServer(server, departemantService{})
+	proto.RegisterDepartemantServiceServer(server, &departemantService{})
 
 	listener, err := net.Listen("tcp", ":6000")
 	if err != nil {
